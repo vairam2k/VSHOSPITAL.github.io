@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dr. Vairam's Website</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #f0f8ff; }
+    h1 { color: #003366; }
+    p { font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to My Website</h1>
+  <p>Medical Professor | Researcher</p>
+  <p>Chennai, Tamil Nadu</p>
+</body>
+</html>
