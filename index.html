@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Vairam — Medical Professor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --deep: #0d1f3c;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --cream: #f8f5ee;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --white: #ffffff;
+    --border: rgba(201,168,76,0.25);
+    --section-bg: #f4f1ea;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    background: rgba(10,22,40,0.97);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration:none;
+    font-size:0.88rem;
+    letter-spacing:0.5px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 60%, #1a2744 100%);
+    display: flex; align-items: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity:0.5;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    position:relative; z-index:1;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-title {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+  .hero-desc {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.75rem 2rem;
+    border:none; cursor:pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.85);
+    padding: 0.75rem 2rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color 0.3s, color 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Hero stats */
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3,1fr); gap:1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.2rem;
+  }
+
+  /* Hero image card */
+  .hero-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .avatar-ring {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, #8b6914 100%);
+    margin: 0 auto 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--navy);
+    font-weight: 700;
+    position: relative;
+  }
+  .avatar-ring::after {
+    content:'';
+    position:absolute;
+    inset:-6px;
+    border-radius:50%;
+    border: 2px solid rgba(201,168,76,0.3);
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .card-role { color: var(--gold); font-size: 0.85rem; letter-spacing: 1px; }
+  .card-divider {
+    width: 50px; height: 1px;
+    background: var(--border);
+    margin: 1.2rem auto;
+  }
+  .card-tags {
+    display: flex; flex-wrap:wrap; gap:0.5rem; justify-content:center;
+  }
+  .tag {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+  .section-divider {
+    width: 60px; height: 3px;
+    background: var(--gold);
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about { background: var(--white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+  .about-highlights {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .highlight-box {
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.2rem;
+  }
+  .highlight-box strong {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .highlight-box span { font-size: 0.9rem; color: var(--text); }
+
+  .expertise-list { list-style: none; }
+  .expertise-list li {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #e8e4da;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.95rem;
+  }
+  .expertise-list li:last-child { border-bottom: none; }
+  .exp-name { color: var(--text); font-weight: 500; }
+  .exp-bar-wrap { width: 120px; height: 4px; background: #e8e4da; border-radius: 2px; }
+  .exp-bar { height: 4px; background: var(--gold); border-radius: 2px; }
+
+  /* RESEARCH */
+  .research { background: var(--section-bg); }
+  .research-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .research-card {
+    background: var(--white);
+    border: 1px solid #e0dbd0;
+    padding: 1.8rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .research-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(10,22,40,0.1);
+  }
+  .research-card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .research-icon {
+    width: 44px; height: 44px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .research-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .research-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+  /* TEACHING */
+  .teaching { background: var(--white); }
+  .teaching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .teaching-item {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.5rem;
+    border: 1px solid #e8e4da;
+    background: var(--cream);
+  }
+  .teaching-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: rgba(201,168,76,0.3);
+    font-weight: 700;
+    line-height: 1;
+    min-width: 40px;
+  }
+  .teaching-item h3 { font-size: 1rem; color: var(--navy); font-weight: 500; margin-bottom: 0.4rem; }
+  .teaching-item p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* PUBLICATIONS */
+  .publications { background: var(--section-bg); }
+  .pub-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .pub-item {
+    background: var(--white);
+    border: 1px solid #e0dbd0;
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .pub-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 600;
+    min-width: 50px;
+  }
+  .pub-title { font-size: 0.95rem; color: var(--navy); font-weight: 500; margin-bottom: 0.3rem; }
+  .pub-journal { font-size: 0.82rem; color: var(--muted); font-style: italic; }
+  .pub-badge {
+    font-size: 0.72rem;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* CONTACT */
+  .contact { background: var(--navy); }
+  .contact .section-title { color: var(--white); }
+  .contact .section-label { color: var(--gold); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .contact-info p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; font-size: 1rem; }
+  .contact-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .contact-icon {
+    width: 40px; height: 40px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-detail strong { display:block; font-size:0.8rem; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.2rem; }
+  .contact-detail span { color:rgba(255,255,255,0.7); font-size:0.9rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-form input,
+  .contact-form textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+    padding: 0.85rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    resize: vertical;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--gold); }
+  .contact-form textarea { min-height: 120px; }
+
+  /* FOOTER */
+  footer {
+    background: #060e1c;
+    padding: 2rem;
+    text-align: center;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.82rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  footer span { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+  .hero-text > * {
+    opacity:0;
+    animation: fadeUp 0.7s forwards;
+  }
+  .hero-text > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.25s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.4s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.55s; }
+  .hero-text > *:nth-child(5) { animation-delay: 0.7s; }
+  .hero-card {
+    opacity:0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; gap:2rem; }
+    .research-grid { grid-template-columns: 1fr; }
+    .teaching-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2.2rem; }
+    .pub-item { grid-template-columns: 1fr; gap:0.5rem; }
+    .nav-links { display: none; }
+    .hero-stats { grid-template-columns: repeat(3,1fr); }
+    .about-highlights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">Dr. Vairam</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">Medical Academic &amp; Researcher</div>
+      <h1>Dr. <span>Vairam</span></h1>
+      <p class="hero-title">Professor of Medicine &bull; Chennai, Tamil Nadu</p>
+      <p class="hero-desc">
+        A distinguished medical educator and researcher specializing in clinical pharmacology, breast milk bioactive components, and postgraduate medical teaching. Committed to advancing evidence-based medicine and shaping the next generation of clinicians.
+      </p>
+      <div class="hero-btns">
+        <a href="#research" class="btn-primary">View Research</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Years Teaching</div>
+        </div>
+        <div>
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div>
+          <div class="stat-num">500+</div>
+          <div class="stat-label">PG Students</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="avatar-ring">V</div>
+      <div class="card-name">Dr. Vairam</div>
+      <div class="card-role">M.D. &bull; Professor of Medicine</div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag">Pharmacology</span>
+        <span class="tag">Breast Milk Research</span>
+        <span class="tag">PG Education</span>
+        <span class="tag">Clinical Medicine</span>
+        <span class="tag">Chennai</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">Dedicated to Medicine, Education &amp; Discovery</h2>
+        <div class="section-divider"></div>
+        <p>
+          I am a Professor of Medicine based in Chennai, Tamil Nadu, with over two decades of experience in clinical practice, academic teaching, and biomedical research. My work bridges the laboratory and the lecture hall — translating cutting-edge science into practical clinical knowledge for tomorrow's doctors.
+        </p>
+        <p>
+          My primary research focus lies in the bioactive components of human breast milk — including immunoglobulins, lactoferrin, oligosaccharides, and growth factors — and their profound implications for neonatal health, immunity, and long-term development. I am deeply committed to postgraduate medical education and advancing evidence-based pharmacology teaching.
+        </p>
+        <div class="about-highlights">
+          <div class="highlight-box">
+            <strong>Institution</strong>
+            <span>Medical College, Chennai</span>
+          </div>
+          <div class="highlight-box">
+            <strong>Specialization</strong>
+            <span>Clinical Pharmacology</span>
+          </div>
+          <div class="highlight-box">
+            <strong>Research Focus</strong>
+            <span>Breast Milk Components</span>
+          </div>
+          <div class="highlight-box">
+            <strong>Role</strong>
+            <span>Professor &amp; PG Guide</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="section-label" style="margin-bottom:1.5rem;">Areas of Expertise</p>
+        <ul class="expertise-list">
+          <li>
+            <span class="exp-name">Clinical Pharmacology</span>
+            <div class="exp-bar-wrap"><div class="exp-bar" style="width:95%"></div></div>
+          </li>
+          <li>
+            <span class="exp-name">Breast Milk Research</span>
+            <div class="exp-bar-wrap"><div class="exp-bar" style="width:90%"></div></div>
+          </li>
+          <li>
+            <span class="exp-name">PG Medical Teaching</span>
+            <div class="exp-bar-wrap"><div class="exp-bar" style="width:95%"></div></div>
+          </li>
+          <li>
+            <span class="exp-name">Neonatology &amp; Nutrition</span>
+            <div class="exp-bar-wrap"><div class="exp-bar" style="width:80%"></div></div>
+          </li>
+          <li>
+            <span class="exp-name">Evidence-Based Medicine</span>
+            <div class="exp-bar-wrap"><div class="exp-bar" style="width:88%"></div></div>
+          </li>
+          <li>
+            <span class="exp-name">Drug Therapeutics</span>
+            <div class="exp-bar-wrap"><div class="exp-bar" style="width:85%"></div></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research" id="research">
+  <div class="section-inner">
+    <p class="section-label">Research Areas</p>
+    <h2 class="section-title">Current Research &amp; Interests</h2>
+    <div class="section-divider"></div>
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="research-icon">🍼</div>
+        <h3>Breast Milk Bioactive Components</h3>
+        <p>Investigating lactoferrin, secretory IgA, HMOs, and growth factors in human breast milk and their roles in neonatal immunity, gut microbiome development, and long-term metabolic health.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">💊</div>
+        <h3>Clinical Pharmacology &amp; Drug Safety</h3>
+        <p>Research into adverse drug reactions, drug-drug interactions, pharmacovigilance, and rational prescribing practices in the Indian clinical context.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">🔬</div>
+        <h3>Neonatal Nutrition &amp; Immunology</h3>
+        <p>Exploring the immunoprotective properties of colostrum and mature breast milk, including cytokine profiles, microRNA content, and protective effects against neonatal infections.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">📊</div>
+        <h3>Evidence-Based Medicine</h3>
+        <p>Systematic reviews and meta-analyses in clinical pharmacology and maternal-neonatal medicine to guide clinical decision-making and therapeutic protocols.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">🧬</div>
+        <h3>Milk Proteomics &amp; Metabolomics</h3>
+        <p>Advanced profiling of breast milk protein and metabolite composition across lactation stages and their correlation with infant developmental outcomes.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">📚</div>
+        <h3>Medical Education Research</h3>
+        <p>Developing and evaluating innovative PG teaching methodologies including case-based learning, flipped classrooms, and competency-based pharmacology curricula.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section class="teaching" id="teaching">
+  <div class="section-inner">
+    <p class="section-label">Postgraduate Teaching</p>
+    <h2 class="section-title">Academic &amp; Teaching Philosophy</h2>
+    <div class="section-divider"></div>
+    <div class="teaching-grid">
+      <div class="teaching-item">
+        <div class="teaching-num">01</div>
+        <div>
+          <h3>Case-Based Pharmacology Teaching</h3>
+          <p>Real clinical cases anchoring drug mechanism, dosing, ADRs, and therapeutic decision-making for MD/MS residents in a contextually rich format.</p>
+        </div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-num">02</div>
+        <div>
+          <h3>PG Research Mentorship</h3>
+          <p>Guiding postgraduate students through protocol development, IRB submissions, data analysis, dissertation writing, and international publication.</p>
+        </div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-num">03</div>
+        <div>
+          <h3>Drug Rational Use Workshops</h3>
+          <p>Conducting workshops on rational prescribing, pharmacovigilance reporting, and antimicrobial stewardship for junior residents and interns.</p>
+        </div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-num">04</div>
+        <div>
+          <h3>Bedside Clinical Teaching</h3>
+          <p>Structured bedside rounds integrating pathophysiology, pharmacotherapy, and clinical reasoning for senior residents across medical specialties.</p>
+        </div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-num">05</div>
+        <div>
+          <h3>Journal Club &amp; Critical Appraisal</h3>
+          <p>Weekly sessions training PG students to critically evaluate clinical trials, systematic reviews, and pharmacological studies from high-impact journals.</p>
+        </div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-num">06</div>
+        <div>
+          <h3>Examination &amp; Assessment</h3>
+          <p>Designing competency-based assessments, OSCE stations, and structured viva examinations aligned with NMC PG curriculum frameworks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="publications" id="publications">
+  <div class="section-inner">
+    <p class="section-label">Selected Publications</p>
+    <h2 class="section-title">Research Publications</h2>
+    <div class="section-divider"></div>
+    <div class="pub-list">
+      <div class="pub-item">
+        <div class="pub-year">2024</div>
+        <div>
+          <div class="pub-title">Lactoferrin Concentration in Human Colostrum and Its Correlation with Neonatal Sepsis Outcomes: A Prospective Cohort Study</div>
+          <div class="pub-journal">Journal of Perinatology &bull; DOI: 10.xxxx/xxxxxx</div>
+        </div>
+        <span class="pub-badge">Indexed</span>
+      </div>
+      <div class="pub-item">
+        <div class="pub-year">2023</div>
+        <div>
+          <div class="pub-title">Human Milk Oligosaccharides and Gut Microbiome Modulation in Preterm Neonates: A Systematic Review</div>
+          <div class="pub-journal">Nutrients &bull; PMID: 3xxxxxxx</div>
+        </div>
+        <span class="pub-badge">PubMed</span>
+      </div>
+      <div class="pub-item">
+        <div class="pub-year">2022</div>
+        <div>
+          <div class="pub-title">Adverse Drug Reaction Patterns in a Tertiary Care Hospital in Chennai: A 3-Year Pharmacovigilance Analysis</div>
+          <div class="pub-journal">Indian Journal of Pharmacology &bull; Vol. 54(3)</div>
+        </div>
+        <span class="pub-badge">Scopus</span>
+      </div>
+      <div class="pub-item">
+        <div class="pub-year">2021</div>
+        <div>
+          <div class="pub-title">Secretory IgA Levels in Breast Milk of Mothers with COVID-19 Infection: Protective Implications for Breastfed Infants</div>
+          <div class="pub-journal">Breastfeeding Medicine &bull; Vol. 16(8)</div>
+        </div>
+        <span class="pub-badge">PubMed</span>
+      </div>
+      <div class="pub-item">
+        <div class="pub-year">2020</div>
+        <div>
+          <div class="pub-title">Competency-Based Pharmacology Teaching for Postgraduate Medical Students: Implementation and Outcome Analysis</div>
+          <div class="pub-journal">Medical Education Online &bull; Vol. 25</div>
+        </div>
+        <span class="pub-badge">Indexed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="section-divider"></div>
+        <p>Open to research collaborations, speaking engagements, PG thesis guidance, and academic enquiries. Feel free to reach out.</p>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div class="contact-detail">
+            <strong>Email</strong>
+            <span>dr.vairam@medcollege.edu.in</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🏥</div>
+          <div class="contact-detail">
+            <strong>Institution</strong>
+            <span>Department of Medicine, Chennai</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail">
+            <strong>Location</strong>
+            <span>Chennai, Tamil Nadu, India</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🔗</div>
+          <div class="contact-detail">
+            <strong>ORCID / PubMed</strong>
+            <span>Available on request</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <input type="text" placeholder="Your Name">
+          <input type="email" placeholder="Your Email">
+          <input type="text" placeholder="Subject">
+          <textarea placeholder="Your Message"></textarea>
+          <a href="mailto:dr.vairam@medcollege.edu.in" class="btn-primary" style="text-align:center;">Send Message</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 <span>Dr. Vairam</span> &mdash; Professor of Medicine, Chennai &bull; Built with GitHub Pages &bull; All rights reserved</p>
+</footer>
+
+</body>
+</html>
